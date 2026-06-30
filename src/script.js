@@ -48,7 +48,7 @@ const material = new THREE.MeshToonMaterial({
 });
 
 // Meshes
-const mesh1 = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+const mesh1 = new THREE.Mesh(new THREE.TorusGeometry(1, 0.4, 16, 60), material);
 
 const mesh2 = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
 
@@ -58,6 +58,8 @@ const objectsDistance = 4;
 mesh1.position.y = -objectsDistance * 0;
 mesh2.position.y = -objectsDistance * 1;
 mesh3.position.y = -objectsDistance * 2;
+
+const sectionMeshes = [mesh1, mesh2, mesh3]
 
 scene.add(mesh1, mesh2, mesh3);
 
@@ -120,6 +122,17 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Animate Meshes
+  for(const mesh of sectionMeshes){
+    //mesh.rotation.x = elapsedTime * 0.1
+    //mesh.rotation.y = elapsedTime * 0.12
+    mesh.rotation.set(
+      elapsedTime * 0.1 * 5, 
+      elapsedTime * 0.12, 
+      0
+    )
+  }
 
   // Render
   renderer.render(scene, camera);
